@@ -68,7 +68,9 @@ namespace The_Byte
 
         }
 
-        // Favouriting a recipe.
+        /*
+         * FAVORITING A RECIPE
+         */
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             // Check if a recipe is currently displayed
