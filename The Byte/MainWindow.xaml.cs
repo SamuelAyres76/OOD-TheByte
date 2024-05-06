@@ -19,6 +19,7 @@ namespace The_Byte
 {
     public partial class MainWindow : Window
     {
+        // My Variables
         private List<string> sortingOptions = new List<string> { "Cook Time", "Alphabetical Order", "Favorited" };
         private Recipes recipes;
         private MediaPlayer mediaPlayer;
@@ -29,48 +30,40 @@ namespace The_Byte
             InitializeComponent();
             recipes = new Recipes();
 
-            // Initialize the media player
+            // Start up the media player
             mediaPlayer = new MediaPlayer();
 
             // Load the media file
             LoadMediaFile("BGM.mp3");
 
-            // Play the media file
-            PlayMedia();
-
-            // Play background music
+            // Play my background music
             mediaPlayer.Play();
 
-            // Populate the ListBox with recipe names
+            // Populate the ListBox with the recipe names.
             foreach (Recipe recipe in recipes.RecipeList)
             {
                 lbx_RecipesList.Items.Add(recipe.Name);
             }
 
-            // Populate the ComboBox with sorting options
+            // Populate the ComboBox with sorting options.
             cbx_SortByBox.ItemsSource = sortingOptions;
 
+            // Important inclusion for displaying the date.
             Loaded += MainWindow_Loaded;
         }
+
+        /***************************************
+         * THE DATE
+         ***************************************/
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Set the text of tbx_Date to today's date
+            // Add the Date to the Textbox.
             tbx_Date.Text = DateTime.Today.ToString("dd-MM-yyyy");
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void lbx_CookTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        /*
+        /***************************************
          * FAVORITING A RECIPE
-         */
+         ***************************************/
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             // Check if a recipe is currently displayed
@@ -85,31 +78,21 @@ namespace The_Byte
             }
         }
 
-        private void tbx_CookTime_Copy_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void cbx_SortByBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        /*
-         * SORTING MY RECIPES
-         */
+        /***************************************
+         * SORTING RECIPES
+         ***************************************/
         private void btn_SortRecipes_Click(object sender, RoutedEventArgs e)
         {
-            // Get the selected sorting option
+            // Get the selected sorting option.
             string selectedSortingOption = cbx_SortByBox.SelectedItem as string;
 
-            // Check if any sorting option is selected
+            // Check if any sorting option is selected.
             if (!string.IsNullOrEmpty(selectedSortingOption))
             {
-                // Create a temporary list to hold sorted recipes
+                // Create a Temporary List to hold my Sorted Recipes.
                 List<Recipe> sortedRecipes = new List<Recipe>();
 
-                // Sort the recipes based on the selected criteria
+                // Sort the Recipes Based on the User Selection.
                 switch (selectedSortingOption)
                 {
                     case "Cook Time":
@@ -119,14 +102,13 @@ namespace The_Byte
                         sortedRecipes = recipes.RecipeList.OrderBy(recipe => recipe.Name).ToList();
                         break;
                     case "Favorited":
-                        // Filter favorited recipes
                         sortedRecipes = recipes.RecipeList.Where(recipe => recipe.IsFavourited).ToList();
                         break;
                     default:
                         break;
                 }
 
-                // Clear the ListBox and repopulate it with the sorted recipes
+                // Clear the ListBox and repopulate it with the sorted recipes.
                 lbx_RecipesList.Items.Clear();
                 foreach (Recipe recipe in sortedRecipes)
                 {
@@ -135,64 +117,52 @@ namespace The_Byte
             }
         }
 
+        /***************************************
+         * THE SORTING PROCESS
+         ***************************************/
         private void lbx_RecipesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Get the name of the selected recipe
+            // Get the name of the selected recipe.
             string selectedRecipeName = lbx_RecipesList.SelectedItem as string;
 
             if (!string.IsNullOrEmpty(selectedRecipeName))
             {
-                // Find the selected recipe by name
+                // Find the selected recipe by name.
                 Recipe selectedRecipe = recipes.RecipeList.FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
 
                 if (selectedRecipe != null)
                 {
-                    // Store the ID of the currently displayed recipe
+                    // Store the ID of the currently displayed recipe.
                     currentRecipeId = selectedRecipe.Id;
 
-                    // Update the text fields with recipe information
+                    // Update the right side of the screen with recipe information.
                     tbx_RecipeName.Text = selectedRecipe.Name;
                     tbx_CookTime.Text = selectedRecipe.CookTime.ToString();
                     lbx_IngredientsList.ItemsSource = selectedRecipe.Ingredients;
 
-                    // Clear the previous instructions
+                    // Clear the previous instructions (IMPORTANT)
                     lbx_InstructionsList.Items.Clear();
 
-                    // Number the instructions
+                    // Number the instructions. 
                     string[] instructions = selectedRecipe.Instructions.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                     for (int i = 0; i < instructions.Length; i++)
                     {
                         lbx_InstructionsList.Items.Add($"{i + 1}. {instructions[i]}");
                     }
 
-                    // Update the checkbox based on the favourited status of the selected recipe
+                    // Update the checkbox based on the favourited status of the selected recipe.
                     chk_LikeRecipe.IsChecked = selectedRecipe.IsFavourited;
 
-                    // Update the image source
+                    // Update the Displayed Image.
                     var imageSource = new BitmapImage(new Uri(selectedRecipe.ImagePath, UriKind.RelativeOrAbsolute));
                     img_RecipeImage.Source = imageSource;
                 }
             }
         }
 
-        private void tbx_CookTime_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void lbx_IngredientsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void lbx_InstructionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        /* 
-         * SURPRISE ME Button
-         */
+        /***************************************
+         * SURPRISE ME BUTTON
+         ***************************************/
         private void btn_SurpriseMe_Click(object sender, RoutedEventArgs e)
         {
             // Grab a random recipe ID from one to nine.
@@ -207,7 +177,7 @@ namespace The_Byte
                 // Store the ID of the currently displayed recipe.
                 currentRecipeId = selectedRecipe.Id;
 
-                // Update the right side of the screen with the selected recipe's information!
+                // Update the right side of the screen with the selected recipe's information.
                 tbx_RecipeName.Text = selectedRecipe.Name;
                 tbx_CookTime.Text = selectedRecipe.CookTime.ToString();
                 lbx_IngredientsList.ItemsSource = selectedRecipe.Ingredients;
@@ -224,12 +194,16 @@ namespace The_Byte
 
                 // Update the checkbox based on the favourited status of the selected recipe.
                 chk_LikeRecipe.IsChecked = selectedRecipe.IsFavourited;
+
+                // Update the image source
+                var imageSource = new BitmapImage(new Uri(selectedRecipe.ImagePath, UriKind.RelativeOrAbsolute));
+                img_RecipeImage.Source = imageSource;
             }
         }
 
-        /*
-         * MUSIC PLAYER
-         */
+        /***************************************
+         * MY MUSIC PLAYER
+         ***************************************/
         private void LoadMediaFile(string filename)
         {
             try
@@ -272,6 +246,30 @@ namespace The_Byte
         {
             // Stop the media player when the window is closing
             mediaPlayer.Stop();
+        }
+
+        private void tbx_CookTime_Copy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cbx_SortByBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void tbx_CookTime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void lbx_IngredientsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void lbx_InstructionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

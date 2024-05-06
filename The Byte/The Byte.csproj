@@ -96,5 +96,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MyImages\Pancakes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MyImages\BeefTacos.png" />
+    <Resource Include="MyImages\CaesarSalad.png" />
+    <Resource Include="MyImages\ChickenCurry.png" />
+    <Resource Include="MyImages\ChocolateCake.png" />
+    <Resource Include="MyImages\GreekSalad.png" />
+    <Resource Include="MyImages\VegetableLasagna.png" />
+    <Resource Include="MyImages\VegetableStirFry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MyImages\SpaghettiBolognese.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
