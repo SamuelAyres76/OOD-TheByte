@@ -47,5 +47,8 @@
         <TextBox x:Name="tbx_Date" HorizontalAlignment="Left" Margin="694,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" Height="22"/>
         <TextBlock x:Name="tblk_Date" HorizontalAlignment="Left" Margin="610,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" FontWeight="Bold" Height="20" RenderTransformOrigin="0.592,0.102"><Run Language="en-ie" Text="Todays Date:"/></TextBlock>
 
+        <!-- Recipe Image -->
+        <Image x:Name="img_RecipeImage" HorizontalAlignment="Left" Height="100" Margin="255,139,0,0" VerticalAlignment="Top" Width="122" />
+
     </Grid>
 </Window>

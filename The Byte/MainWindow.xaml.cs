@@ -150,27 +150,30 @@ namespace The_Byte
                     // Store the ID of the currently displayed recipe
                     currentRecipeId = selectedRecipe.Id;
 
+                    // Update the text fields with recipe information
                     tbx_RecipeName.Text = selectedRecipe.Name;
                     tbx_CookTime.Text = selectedRecipe.CookTime.ToString();
                     lbx_IngredientsList.ItemsSource = selectedRecipe.Ingredients;
 
-                    // Clearing the previous instructions.
+                    // Clear the previous instructions
                     lbx_InstructionsList.Items.Clear();
 
-                    // Adding numbers to the end of each cooking/baking instruction.
+                    // Number the instructions
                     string[] instructions = selectedRecipe.Instructions.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                     for (int i = 0; i < instructions.Length; i++)
                     {
-                        // Adding the aforementioned instructions with numbers.
                         lbx_InstructionsList.Items.Add($"{i + 1}. {instructions[i]}");
                     }
 
                     // Update the checkbox based on the favourited status of the selected recipe
                     chk_LikeRecipe.IsChecked = selectedRecipe.IsFavourited;
+
+                    // Update the image source
+                    var imageSource = new BitmapImage(new Uri(selectedRecipe.ImagePath, UriKind.RelativeOrAbsolute));
+                    img_RecipeImage.Source = imageSource;
                 }
             }
         }
-
 
         private void tbx_CookTime_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -227,7 +230,6 @@ namespace The_Byte
         /*
          * MUSIC PLAYER
          */
-
         private void LoadMediaFile(string filename)
         {
             try
