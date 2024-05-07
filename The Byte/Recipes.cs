@@ -21,7 +21,7 @@ namespace TheByte
         }
     }
 
-    internal class Recipes
+    public class Recipes
     {
         public List<Recipe> RecipeList { get; set; }
 
